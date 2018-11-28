@@ -1,31 +1,32 @@
 #include "company.h"
+#include <iostream>
 using namespace std;
 
 //employee
-void  employee::setSalaryAndId(const int i, const double s)
+void  employees::setSalaryAndId(const int i, const double s)
 {
 ID=i;
 salary=s;
 
 }
 
-double employee::getSalary(void) const
+double employees::getSalary(void) const
 {
 return salary;
 
 }
 
-void employee::printEmployee(void) const
+void employees::printEmployee(void) const
 {
 
-cout<<"ID "<<ID<<", "<<"Salary "<<salary<<endl;
+cout<<"ID "<<ID<<", "<<"Salary "<<getSalary()<<endl;
 }
 
 //fixed_term
 fixed_term::fixed_term(int id,double salary_, double period_)
 {
-ID=id;
-salary=salary_;
+setSalaryAndId(id,salary_);
+
 period=period_;
 
 }
@@ -39,22 +40,19 @@ return period;
 
 
 //permanent
-permanent::permanent(int id,double salary_, double bonus_)
+permanent::permanent(int id,double salary_, double bonus_):employees(id,salary_)
 {
-ID=id;
-salary=salary_;
+
 bonus=bonus_;
 }
 
 
 
 //manager
-manage::manager (int id, double salary_, double bonus_, double extra_bonus_, int team_size_)
+manage::manager (int id, double salary_, double bonus_, double extra_bonus_, int team_size_):permanent(id,salary_, period_)
 {
 
-ID=id;
-salary=salary_;
-bonus=bonus_;
+
 extra_bonus=extra_bonus_;
 team_size=team_size_;
 
@@ -62,22 +60,20 @@ team_size=team_size_;
 
 void manager::printEmployee(void) const
 {
-cout<<"ID "<<ID<<", "<<"Salary "<<salary<<", "<<"Bonus "<<bonus<<", "<<"Extra bonus "<<extra_bonus<<", "<<"Team size "<<team_size<<endl;
+cout<<"ID "<<ID<<", "<<"Salary "<<getSalary()<<", "<<"Bonus "<<bonus<<", "<<"Extra bonus "<<extra_bonus<<", "<<"Team size "<<team_size<<endl;
 }
 
 double manager::cost(void) const
 {
 
-return ( salary+bonus+(extra_bonus*team_size) );
+return ( getSalary()+bonus+(extra_bonus*team_size) );
 
 }
 
 //trainer
-trainee::trainee (int id, double salary_, double period_, double imputation_, const permanent &in_charge_ )
+trainee::trainee (int id, double salary_, double period_, double imputation_, const permanent &in_charge_ ):fixed_term(id, salary_, period_)
 {
-ID=id;
-salary=salary_;
-period=period_;
+
 imputation=imputation_;
 in_charge=in_charge_;
 }
@@ -85,50 +81,47 @@ in_charge=in_charge_;
 void trainee::printEmployee(void) const
 {
 
-cout<<"ID "<<ID<<", "<<"Salary "<<salary<<", "<<"Period "<<period<<", "<<"Imputation "<<imputation<<endl;
+cout<<"ID "<<ID<<", "<<"Salary "<<getSalary()<<", "<<"Period "<<period<<", "<<"Imputation "<<imputation<<endl;
 }
 
 double trainee::totalCost(void) const
 {
 // (salary*period)+(imputation*)
-return (salary+imputation)*period;
+return (getSalary()+imputation)*period;
 }
 
 
 //subcontractor
-subcontractor::subcontractor(int id, double salary_, double period_, double computer_cost_)
+subcontractor::subcontractor(int id, double salary_, double period_, double computer_cost_):fixed_term(id, salary_, period_)
 {
-ID=id;
-salary=salary_;   
-period=period_;
+
 computer_cost=computer_cost_; 
 }
 
 void subcontractor::printEmployee(void) const
 {
-cout<<"ID "<<ID<<", "<<"Salary "<<salary<<", "<<"Period "<<period<<", "<<"Computer cost"<<computer_cost;
+cout<<"ID "<<ID<<", "<<"Salary "<<getSalary()<<", "<<"Period "<<period<<", "<<"Computer cost"<<computer_cost;
 }
 
 void subcontractor::totalCost(void) const
 {
-    return (salary+computer_cost)*period;
+    return (getSalary()+computer_cost)*period;
 }
 
 
 
- developer::developer (int id, double salary_, double bonus, int number_of_active_project_)
+ developer::developer (int id, double salary_, double bonus_, int number_of_active_project_):permanent(id,salary_,bonus_)
  {
-     ID=id;
-     salary=salary_;
-     bonus=bonus_;
+
      number_of_active_project=number_of_active_project_;
  }
+
 void developer::printEmployee(void) const
 {
-cout<<"ID "<<ID<<", "<<"Salary "<<salary<<", "<<"Bonus "<<bonus<<", "<<"Project number "<<number_of_active_project<<endl;
+cout<<"ID "<<ID<<", "<<"Salary "<<getSalary()<<", "<<"Bonus "<<bonus<<", "<<"Project number "<<number_of_active_project<<endl;
 }
         
 double developer::cost(void) const
 {
-return (salary+bonus);
+return (getSalary()+bonus);
 }
