@@ -36,11 +36,7 @@ return period;
 
 }
 
-double fixed_term::totalCost(void) const
-{
-return salary*period;
 
-}
 
 //permanent
 permanent::permanent(int id,double salary_, double bonus_)
@@ -50,12 +46,7 @@ salary=salary_;
 bonus=bonus_;
 }
 
-double permanent::cost(void) const 
-{
-ID=0;
-salary=0;
-bonus=0;
-}
+
 
 //manager
 manage::manager (int id, double salary_, double bonus_, double extra_bonus_, int team_size_)
