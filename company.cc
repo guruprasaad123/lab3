@@ -88,6 +88,7 @@ ID=id;
 salary=salary_;
 period=period_;
 imputation=imputation_;
+in_charge=in_charge_;
 }
 
 void trainee::printEmployee(void) const
@@ -98,7 +99,45 @@ cout<<"ID "<<ID<<", "<<"Salary "<<salary<<", "<<"Period "<<period<<", "<<"Imputa
 
 double trainee::totalCost(void) const
 {
-
-
+// (salary*period)+(imputation*)
+return (salary+imputation)*period;
 }
 
+
+//subcontractor
+subcontractor::subcontractor(int id, double salary_, double period_, double computer_cost_)
+{
+ID=id;
+salary=salary_;   
+period=period_;
+computer_cost=computer_cost_; 
+}
+
+void subcontractor::printEmployee(void) const
+{
+cout<<"ID "<<ID<<", "<<"Salary "<<salary<<", "<<"Period "<<period<<", "<<"Computer cost"<<computer_cost;
+}
+
+void subcontractor::totalCost(void) const
+{
+    return (salary+computer_cost)*period;
+}
+
+
+
+ developer::developer (int id, double salary_, double bonus, int number_of_active_project_)
+ {
+     ID=id;
+     salary=salary_;
+     bonus=bonus_;
+     number_of_active_project=number_of_active_project_;
+ }
+void developer::printEmployee(void) const
+{
+cout<<"ID "<<ID<<", "<<"Salary "<<salary<<", "<<"Bonus "<<bonus<<", "<<"Project number "<<number_of_active_project<<endl;
+}
+        
+double developer::cost(void) const
+{
+return (salary+bonus);
+}
