@@ -19,7 +19,7 @@ return salary;
 void employees::printEmployee(void) const
 {
 
-cout<<"ID "<<ID<<", "<<"Salary "<<getSalary()<<endl;
+cout<<"ID "<<ID<<", "<<"Salary "<<getSalary();
 }
 
 //fixed_term
@@ -40,19 +40,19 @@ return period;
 
 
 //permanent
-permanent::permanent(int id,double salary_, double bonus_):employees(id,salary_)
+permanent::permanent(int id,double salary_, double bonus_)
 {
-
+setSalaryAndId(id,salary_);
 bonus=bonus_;
 }
 
 
 
 //manager
-manage::manager (int id, double salary_, double bonus_, double extra_bonus_, int team_size_):permanent(id,salary_, period_)
+manager::manager (int id, double salary_, double bonus_, double extra_bonus_, int team_size_):permanent(id,salary_, bonus_)
 {
 
-
+cout<<"manager";
 extra_bonus=extra_bonus_;
 team_size=team_size_;
 
@@ -60,7 +60,8 @@ team_size=team_size_;
 
 void manager::printEmployee(void) const
 {
-cout<<"ID "<<ID<<", "<<"Salary "<<getSalary()<<", "<<"Bonus "<<bonus<<", "<<"Extra bonus "<<extra_bonus<<", "<<"Team size "<<team_size<<endl;
+employees::printEmployee();
+cout<<", "<<"Bonus "<<bonus<<", "<<"Extra bonus "<<extra_bonus<<", "<<"Team size "<<team_size<<endl;
 }
 
 double manager::cost(void) const
@@ -71,23 +72,23 @@ return ( getSalary()+bonus+(extra_bonus*team_size) );
 }
 
 //trainer
-trainee::trainee (int id, double salary_, double period_, double imputation_, const permanent &in_charge_ ):fixed_term(id, salary_, period_)
+trainee::trainee (int id, double salary_, double period_, double imputation_, const permanent &in_charge_):in_charge(in_charge_),fixed_term(id, salary_, period_)
 {
 
 imputation=imputation_;
-in_charge=in_charge_;
+//in_charge=(*in_charge_);
 }
 
 void trainee::printEmployee(void) const
 {
-
-cout<<"ID "<<ID<<", "<<"Salary "<<getSalary()<<", "<<"Period "<<period<<", "<<"Imputation "<<imputation<<endl;
+employees::printEmployee();
+cout<<", "<<"Period "<<fixed_term::getPeriod()<<", "<<"Imputation "<<imputation<<endl;
 }
 
 double trainee::totalCost(void) const
 {
 // (salary*period)+(imputation*)
-return (getSalary()+imputation)*period;
+return (getSalary()+imputation)*fixed_term::getPeriod();
 }
 
 
@@ -100,12 +101,13 @@ computer_cost=computer_cost_;
 
 void subcontractor::printEmployee(void) const
 {
-cout<<"ID "<<ID<<", "<<"Salary "<<getSalary()<<", "<<"Period "<<period<<", "<<"Computer cost"<<computer_cost;
+    employees::printEmployee();
+cout<<", "<<"Period "<<fixed_term::getPeriod()<<", "<<"Computer cost"<<computer_cost;
 }
 
-void subcontractor::totalCost(void) const
+double subcontractor::totalCost(void) const
 {
-    return (getSalary()+computer_cost)*period;
+    return (getSalary()+computer_cost)*fixed_term::getPeriod();
 }
 
 
@@ -118,7 +120,8 @@ void subcontractor::totalCost(void) const
 
 void developer::printEmployee(void) const
 {
-cout<<"ID "<<ID<<", "<<"Salary "<<getSalary()<<", "<<"Bonus "<<bonus<<", "<<"Project number "<<number_of_active_project<<endl;
+    employees::printEmployee();
+cout<<", "<<"Bonus "<<bonus<<", "<<"Project number "<<number_of_active_project<<endl;
 }
         
 double developer::cost(void) const
