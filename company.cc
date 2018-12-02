@@ -102,7 +102,7 @@ computer_cost=computer_cost_;
 void subcontractor::printEmployee(void) const
 {
     employees::printEmployee();
-cout<<", "<<"Period "<<fixed_term::getPeriod()<<", "<<"Computer cost"<<computer_cost;
+cout<<", "<<"Period "<<fixed_term::getPeriod()<<", "<<"Computer cost "<<computer_cost<<endl;
 }
 
 double subcontractor::totalCost(void) const
